@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import './UserManage.scss';
 import { getAllUsers } from '../../services/userService';
+import ModalUser from './ModalUser';
 
 
 class UserManage extends Component {
@@ -10,7 +11,8 @@ class UserManage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            arrUsers: []
+            arrUsers: [],
+            isOpenUserModal: false,
         }
     }
     /** Life cycle
@@ -32,6 +34,18 @@ class UserManage extends Component {
         }
     }
 
+    handleAddNewUser = () => {
+        this.setState({
+            isOpenUserModal: true,
+        })
+    }
+
+    toggleUserModal = () => {
+        this.setState({
+            isOpenUserModal: !this.state.isOpenUserModal,
+        })
+    }
+
 
     render() {
         // console.log(this.state);
@@ -39,7 +53,19 @@ class UserManage extends Component {
 
         return (
             <div className="user-container">
+                <ModalUser
+                    isOpen={this.state.isOpenUserModal}
+                    toggleFromParent={this.toggleUserModal}
+                    test='abc'
+                />
                 <div className="title text-center">Manage User with HoidanIt</div>
+                <div className="mx-1">
+                    <button className="btn btn-primary px-3" onClick={() => this.handleAddNewUser()}>
+                        <i className="fas fa-plus">
+                            Add New User
+                        </i>
+                    </button>
+                </div>
                 <div className="user-Table mt-3 mx-1">
                     <table id="customers">
                         <tr>
@@ -51,7 +77,7 @@ class UserManage extends Component {
                         </tr>
                         {
                             arrUsers && arrUsers.map((item, index) => {
-                                console.log('check map: ', item, index)
+                                // console.log('check map: ', item, index)
                                 return (
                                     <tr key={index}>
                                         <td>{item.email}</td>
