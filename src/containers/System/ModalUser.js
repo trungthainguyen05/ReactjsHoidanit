@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { connect } from 'react-redux';
+import { emitter } from '../../utils/emitter';
+
 class ModalUser extends Component {
 
     constructor(props) {
@@ -12,8 +14,20 @@ class ModalUser extends Component {
             lastName: '',
             firstName: '',
             address: ''
-
         }
+        this.listenToEmitter();
+    }
+
+    listenToEmitter() {
+        emitter.on('EVENT_CLEAR_MODAL_DATA', () => {
+            this.setState({
+                email: '',
+                password: '',
+                lastName: '',
+                firstName: '',
+                address: ''
+            })
+        })
     }
 
     componentDidMount() {
@@ -53,22 +67,22 @@ class ModalUser extends Component {
         // console.log('good code', this.state);
     }
 
-    checkValideInput = () => {
-        let isValide = true;
+    checkValidateInput = () => {
+        let isValid = true;
         let arrInput = ["email", "password", "firstName", "lastName", "address"]
         for (let i = 0; i < arrInput.length; i++) {
             if (!this.state[arrInput[i]]) {
-                isValide = false;
+                isValid = false;
                 alert("Missing parameter: " + arrInput[i])
                 break;
             }
         }
 
-        return isValide;
+        return isValid;
     }
 
     handleAddNewUser = () => {
-        let isValid = this.checkValideInput();
+        let isValid = this.checkValidateInput();
         if (isValid === true) {
             //call api create user
             this.props.createNewUser(this.state);
