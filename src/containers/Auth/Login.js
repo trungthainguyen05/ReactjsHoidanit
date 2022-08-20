@@ -6,7 +6,7 @@ import * as actions from "../../store/actions";
 
 import './Login.scss';
 import { FormattedMessage } from 'react-intl';
-import { handleLoginApi }  from '../../services/userService';
+import { handleLoginApi } from '../../services/userService';
 
 
 class Login extends Component {
@@ -49,9 +49,9 @@ class Login extends Component {
             }
             if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user)
-                console.log('Login succeed',data.user)
+                console.log('Login succeed', data.user)
             }
-        } catch(error) {
+        } catch (error) {
             // console.log(e);
             if (error.response) {
                 if (error.response.data) {
@@ -91,17 +91,17 @@ class Login extends Component {
                             <label>Password:</label>
                             <div className="custom-input-password">
                                 <input
-                                    type={this.state.isShowPassword ? 'text':'password'}
+                                    type={this.state.isShowPassword ? 'text' : 'password'}
                                     className="form-control"
                                     placeholder="Enter your password"
                                     value={this.state.password}
                                     onChange={(event) => this.handleOnChangePassword(event)}
                                 />
-                                <span onClick={()=>{this.handleShowHidePassword()}}>
-                                    <i class={this.state.isShowPassword ? "far fa-eye" : "fas fa-eye-slash"}></i>
+                                <span onClick={() => { this.handleShowHidePassword() }}>
+                                    <i className={this.state.isShowPassword ? "far fa-eye" : "fas fa-eye-slash"}></i>
                                 </span>
                             </div>
-                            
+
                         </div>
                         <div className="col-12" style={{ color: 'red' }}>
                             {this.state.errMessage}
@@ -109,7 +109,7 @@ class Login extends Component {
                         <div className="col-12">
                             <button
                                 className="btn-login"
-                                onClick={()=>{this.handleLogin()}}>Login</button>
+                                onClick={() => { this.handleLogin() }}>Login</button>
                         </div>
                         <div className="col-12">
                             <span className="forgot-password">Forgot your password?</span>
@@ -123,7 +123,7 @@ class Login extends Component {
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         )
     }
