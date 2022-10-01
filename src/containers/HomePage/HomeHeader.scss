@@ -63,3 +63,98 @@
         }
     }
 }
+
+.home-header-banner {
+    background: url('../../assets/header-background.jpg');
+    height: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+
+    .content-up {
+        height: 50%;
+
+        .title1 {
+            text-align: center;
+            color: white;
+            font-size: 25px;
+            text-shadow: 1px 1px 1px #333;
+        }
+
+        .title2 {
+            text-align: center;
+            color: white;
+            font-size: 25px;
+            font-weight: 700;
+            text-shadow: 1px 1px 1px #333;
+            margin: 15px;
+        }
+
+        .search {
+            background: #f7d800;
+            align-items: center;
+            margin: 0 auto;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            width: fit-content;
+            border-radius: 45px;
+
+            i {
+                cursor: pointer;
+                margin: 0 5px;
+            }
+
+            input {
+                width: 350px;
+                background: transparent;
+                border: none;
+                outline: none;
+            }
+        }
+    }
+
+    .content-down {
+        height: 50%;
+        border: 1px solid green;
+
+        .options {
+            text-align: center;
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+
+            .option-child {
+                width: 100px;
+                border: 1px solid red;
+                cursor: pointer;
+
+                .icon-child {
+                    background: white;
+                    width: 40px;
+                    height: 40px;
+                    padding: 10px;
+                    border-radius: 50%;
+                    text-align: center;
+                    margin: 0 auto;
+
+                    i {
+                        color: blue;
+                        font-size: 20px;
+                    }
+                }
+
+                .text-child {
+                    font-size: 17px;
+                    font-weight: 500;
+
+                    &:hover {
+                        color: blue;
+                    }
+                }
+            }
+        }
+    }
+
+}
