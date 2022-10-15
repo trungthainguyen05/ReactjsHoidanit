@@ -12,7 +12,7 @@ class About extends Component {
                     <div className="section-about-content">
                         <div className="content-left">
                             <iframe
-                                width="50%"
+                                width="100%"
                                 height="300px"
                                 src="https://www.youtube.com/embed/147SkAVXEqM?list=PLncHg6Kn2JT5-kzm53oVL5ZBAe-LTREGA"
                                 title="#51 Kết Thúc Design Giao Diện Clone BookingCare.vn 4 | React.JS Cho Người Mới Bắt Đầu"
@@ -23,7 +23,10 @@ class About extends Component {
                             </iframe>
                         </div>
                         <div className="content-right">
-
+                            <p>Trong video này, chúng ta sẽ hoàn tất việc design giao diện theo trang bookingcare.vn.
+                                Chúng ta sẽ hoàn thiện những phần đang còn dang dở, để từ video tiếp theo,
+                                chúng ta sẽ bắt đầu làm về backend và
+                                react để tạo dữ liệu thật cho trang home design này.</p>
                         </div>
 
                     </div>
