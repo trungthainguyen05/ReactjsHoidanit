@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { getAllCodeService } from '../../../services/userService';
+
 import { LANGUAGES } from '../../../utils/constant';
+import * as actions from "../../../store/actions";
 
 
 class UserRedux extends Component {
@@ -15,24 +16,21 @@ class UserRedux extends Component {
     }
 
     async componentDidMount() {
-        try {
-            let res = await getAllCodeService('gender');
-            if (res && res.errCode === 0) {
-                this.setState({
-                    genderArr: res.data
-                })
-            }
-
-        } catch (e) {
-            console.log(e);
-
-        }
+        this.props.getGenderStart();
     }
 
+    componentDidUpdate(prevProps, PrevState, SnapShot) {
+        if (prevProps.genderRedux != this.props.genderRedux) {
+            this.setState({
+                genderArr: this.props.genderRedux
+            })
+        }
+    }
 
     render() {
         // console.log('Trung check genderArr: ', this.state);
         // console.log('Trung check language: ', this.props.language)
+        // console.log('Trung check Gender Redux: ', this.props.genderRedux);
 
         let language = this.props.language;
         let genders = this.state.genderArr;
@@ -115,11 +113,15 @@ class UserRedux extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        genderRedux: state.admin.genders,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),
+        // processLogout: () => dispatch(actions.processLogout()),
+        // changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
 };
 
