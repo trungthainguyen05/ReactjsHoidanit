@@ -1,6 +1,9 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
+    isLoadingGender: false,
+    isLoadingPosition: false,
+    isLoadingRole: false,
     genders: [],
     roles: [],
     positions: []
@@ -8,25 +11,65 @@ const initialState = {
 
 const adminReducer = (state = initialState, action) => {
     switch (action.type) {
+        //gender
         case actionTypes.FETCH_GENDER_START:
-            console.log('Trung fire fetch gender start: ', action)
+            state.isLoadingGender = true;
             return {
                 ...state,
-
             }
+
         case actionTypes.FETCH_GENDER_SUCCESS:
-            let copyState = { ...state };
-            copyState.genders = action.data;
-            // console.log('Trung fire fetch gender success: ', copyState);
-            return {
-                ...copyState,
-
-            }
-        case actionTypes.FETCH_GENDER_FAILED:
-            console.log('Trung fire fetch gender failed: ', action)
+            state.isLoadingGender = false;
+            state.genders = action.data;
             return {
                 ...state,
+            }
 
+        case actionTypes.FETCH_GENDER_FAILED:
+            state.isLoadingGender = false;
+            return {
+                ...state,
+            }
+
+        //position
+        case actionTypes.FETCH_POSITION_START:
+            state.isLoadingPosition = true;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            state.isLoadingPosition = false;
+            state.positions = action.data;
+            // console.log('trung check state.position', state.positions)
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_FAILED:
+            state.isLoadingPosition = false;
+            return {
+                ...state,
+            }
+
+        //Role
+        case actionTypes.FETCH_ROLE_START:
+            state.isLoadingRole = true;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ROLE_SUCCESS:
+            state.isLoadingRole = false;
+            state.roles = action.data;
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_ROLE_FAILED:
+            state.isLoadingRole = false;
+            return {
+                ...state,
             }
 
         default:
