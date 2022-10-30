@@ -174,7 +174,6 @@ export const editAUser = (userData) => {
     return async (dispatch, getState) => {
         try {
             let res = await editUserService(userData);
-            console.log("trung check userdata from action: ", userData);
             if (res && res.errCode === 0) {
                 toast.success("Update the user succeed!");
                 dispatch(editUserSuccess());
