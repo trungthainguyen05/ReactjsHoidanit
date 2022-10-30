@@ -7,6 +7,7 @@ import * as actions from "../../../store/actions";
 import './UserRedux.scss';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+import TableManageUser from './TableManageUser';
 
 
 class UserRedux extends Component {
@@ -44,7 +45,7 @@ class UserRedux extends Component {
     }
 
     componentDidUpdate(prevProps, PrevState, SnapShot) {
-        if (prevProps.genderRedux != this.props.genderRedux) {
+        if (prevProps.genderRedux !== this.props.genderRedux) {
             let arrGenders = this.props.genderRedux;
             this.setState({
                 genderArr: arrGenders,
@@ -52,7 +53,7 @@ class UserRedux extends Component {
             })
         }
 
-        if (prevProps.positionRedux != this.props.positionRedux) {
+        if (prevProps.positionRedux !== this.props.positionRedux) {
             let arrPositions = this.props.positionRedux;
             this.setState({
                 positionArr: arrPositions,
@@ -60,11 +61,26 @@ class UserRedux extends Component {
             })
         }
 
-        if (prevProps.roleRedux != this.props.roleRedux) {
+        if (prevProps.roleRedux !== this.props.roleRedux) {
             let arrRoles = this.props.roleRedux;
             this.setState({
                 roleArr: arrRoles,
                 role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
+            })
+        }
+
+        if (prevProps.listUsers !== this.props.listUsers) {
+            this.setState({
+                email: '',
+                password: '',
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                address: '',
+                gender: '',
+                position: '',
+                role: '',
+                avatar: '',
             })
         }
     }
@@ -270,12 +286,17 @@ class UserRedux extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-12 mt-3">
+                            <div className="col-12 mt-3 ">
                                 <button className="btn btn-primary"
                                     onClick={() => this.handleSaveUser()}
                                 ><FormattedMessage id="manage-user.save" />
                                 </button>
                             </div>
+
+                            <div className="col-12 mb-5">
+                                <TableManageUser />
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -303,6 +324,8 @@ const mapStateToProps = state => {
 
         roleRedux: state.admin.roles,
         isLoadingRoleRedux: state.admin.isLoadingRole,
+
+        listUsers: state.admin.users
     };
 };
 
