@@ -27,8 +27,12 @@ class TableManageUser extends Component {
     }
 
     handleDeleteUser = (user) => {
-        console.log('trung check user: ', user);
+        // console.log('trung check user: ', user);
         this.props.deleteAUser(user.id);
+    }
+
+    handleEditUser = (user) => {
+        this.props.handleEditUserFromParentKey(user);
     }
 
     render() {
@@ -53,7 +57,11 @@ class TableManageUser extends Component {
                                     <td>{item.lastName}</td>
                                     <td>{item.address}</td>
                                     <td>
-                                        <button className="btn-edit" onClick={() => this.handleEditUser(item)}><i className="fas fa-pencil-alt"></i></button>
+                                        <button
+                                            className="btn-edit"
+                                            onClick={() => this.handleEditUser(item)}>
+                                            <i className="fas fa-pencil-alt"></i>
+                                        </button>
                                         <button
                                             className="btn-delete"
                                             onClick={() => this.handleDeleteUser(item)}>
