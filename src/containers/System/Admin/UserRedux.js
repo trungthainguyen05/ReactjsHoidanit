@@ -52,7 +52,7 @@ class UserRedux extends Component {
             let arrGenders = this.props.genderRedux;
             this.setState({
                 genderArr: arrGenders,
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : ''
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : ''
             })
         }
 
@@ -60,7 +60,7 @@ class UserRedux extends Component {
             let arrPositions = this.props.positionRedux;
             this.setState({
                 positionArr: arrPositions,
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : ''
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : ''
             })
         }
 
@@ -68,7 +68,7 @@ class UserRedux extends Component {
             let arrRoles = this.props.roleRedux;
             this.setState({
                 roleArr: arrRoles,
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : ''
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : ''
             })
         }
 
@@ -83,9 +83,9 @@ class UserRedux extends Component {
                 lastName: '',
                 phoneNumber: '',
                 address: '',
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : '',
                 avatar: '',
                 action: CRUD_ACTIONS.CREATE,
                 previewImgURL: '',
@@ -100,7 +100,6 @@ class UserRedux extends Component {
         let base64 = await CommonUtils.getBase64(file);
         let objectUrl = URL.createObjectURL(file);
         this.setState({
-
             previewImgURL: objectUrl,
             avatar: base64
         })
@@ -135,7 +134,7 @@ class UserRedux extends Component {
 
     onChangeInput = (event, id) => {
         let copyState = { ...this.state };
-        // console.log('check copy state: ', copyState)
+        // console.log('trung check onchange state: ', copyState) 
         copyState[id] = event.target.value;
         this.setState({
             ...copyState
@@ -151,7 +150,7 @@ class UserRedux extends Component {
         //let action = this.state.action
         let { action } = this.state;
 
-        console.log('Trung check state: ', this.state)
+        console.log('trung check state create user: ', this.state);
 
         if (action === CRUD_ACTIONS.CREATE) {
             // fire redux create user action
@@ -183,11 +182,10 @@ class UserRedux extends Component {
                 avatar: this.state.avatar
             })
         }
-
     }
 
     handleEditUserFromParent = (user) => {
-        console.log('trung check user from parent: ', user);
+        // console.log('trung check user from parent: ', user);
         let imageBase64 = '';
         if (user.image) {
             imageBase64 = new Buffer(user.image, 'base64').toString('binary');
@@ -213,14 +211,11 @@ class UserRedux extends Component {
 
     render() {
         let language = this.props.language;
-        let genders = this.state.genderArr;
         let isGetGender = this.props.isLoadingGenderRedux;
 
+        let genders = this.state.genderArr;
         let roleArrs = this.state.roleArr;
-        let isLoadingRoles = this.props.isLoadingRoleRedux;
-
         let positionArrs = this.state.positionArr;
-        let isLoadingPositions = this.props.isLoadingPositionRedux;
 
         let { email, password, firstName,
             lastName, phoneNumber, address,
@@ -231,8 +226,6 @@ class UserRedux extends Component {
                 <div className="title" >Manage redux user</div>
                 <div>
                     <span>{isGetGender === true ? 'Loading gender' : ''}</span>
-                    <span>{isLoadingRoles === true ? 'Loading Role' : ''}</span>
-                    <span>{isLoadingPositions === true ? 'Loading Role' : ''}</span>
                 </div>
                 <div className="user-redux-body">
                     <div className="container">
@@ -293,7 +286,7 @@ class UserRedux extends Component {
                                     {genders && genders.length > 0 &&
                                         genders.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             )
@@ -311,7 +304,7 @@ class UserRedux extends Component {
                                     {positionArrs && positionArrs.length > 0 &&
                                         positionArrs.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             )
@@ -327,7 +320,7 @@ class UserRedux extends Component {
                                     {roleArrs && roleArrs.length > 0 &&
                                         roleArrs.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             )

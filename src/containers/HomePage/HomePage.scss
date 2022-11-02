@@ -102,6 +102,13 @@
         .section-body {
 
             .section-customize {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center;
+                border: 1px solid lightgreen;
+                gap: 5px ;
+                width: 340px !important;
 
                 // padding: 0 10px;
                 .bg-image {

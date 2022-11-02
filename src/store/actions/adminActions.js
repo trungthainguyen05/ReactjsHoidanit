@@ -121,7 +121,7 @@ export const fetchAllUsersStart = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllUsers("ALL");
-            console.log('trung check getAllUsers from AdminAction: ', res)
+            // console.log('trung check getAllUsers from AdminAction: ', res)
             if (res && res.errCode === 0) {
 
                 dispatch(fetchAllUsersSuccess(res.users.reverse()));
@@ -204,21 +204,27 @@ export const fetchTopDoctors = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getTopDoctorHomeService('5');
-            if (res & res.errCode === 0) {
-                dispatch({
-                    type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
-                    dataDoctor: res.data
-                })
+            if (res && res.errCode === 0) {
+                // console.log('trung check getTopDoctorHomeService from adminAction: ', res)
+                dispatch(fetchTopDoctorsSuccess(res.data))
             } else {
-                dispatch({
-                    type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
-                })
+                dispatch(fetchTopDoctorsFailed())
             }
+            
         } catch (e) {
             console.log(' ', e);
-            dispatch({
-                type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
-            })
+            dispatch(fetchTopDoctorsFailed());
+            
         }
+        
     }
 }
+
+export const fetchTopDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+    dataDoctor: data
+})
+
+export const fetchTopDoctorsFailed = () => ({
+    type: actionTypes.FETCH_TOP_DOCTORS_FAILED
+})

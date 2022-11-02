@@ -2,8 +2,6 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoadingGender: false,
-    isLoadingPosition: false,
-    isLoadingRole: false,
     genders: [],
     roles: [],
     positions: [],
@@ -88,6 +86,7 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
             state.topDoctors = action.dataDoctor;
+            console.log('tr check topDoctors from adminReducer: ', action.dataDoctor);
             return {
                 ...state
             }

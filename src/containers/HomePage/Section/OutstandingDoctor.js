@@ -14,6 +14,10 @@ class OutstandingDoctor extends Component {
         }
     }
 
+    componentDidMount() {
+        this.props.loadTopDoctors();
+    }
+
     componentDidUpdate(prevProps, PrevState, SnapShot) {
         if (prevProps.topDoctorsRedux !== this.props.topDoctorsRedux) {
             this.setState({
@@ -22,12 +26,8 @@ class OutstandingDoctor extends Component {
         }
     }
 
-    componentDidMount() {
-        this.props.loadTopDoctors();
-    }
-
     render() {
-        let arrDoctors = this.state.arrDoctors;
+        let arrDoctors = this.props.topDoctorsRedux;
         console.log('trungcheck arrDoctors: ', arrDoctors);
         let { language } = this.props;
         return (
@@ -40,13 +40,13 @@ class OutstandingDoctor extends Component {
                         </div>
                         <div className="section-body">
                             <Slider {...this.props.settings}>
-                                {/* {arrDoctors && arrDoctors.length > 0
+                                {arrDoctors && arrDoctors.length > 0
                                     && arrDoctors.map((item, index) => {
                                         let imageBase64 = '';
                                         if (item.image) {
                                             imageBase64 = new Buffer(item.image, 'base64').toString('binary');
                                         }
-                                        let nameVi = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`
+                                        let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`
                                         let nameEn = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`
                                         return (
                                             <div className="section-customize" key={index}>
@@ -56,14 +56,13 @@ class OutstandingDoctor extends Component {
                                                 <div className="position text-center">
                                                     <div>
                                                         {language === LANGUAGES.VI ? nameVi : nameEn}
-                                                        Giáo sư, Tiến sỹ Lê Văn Anh
                                                     </div>
                                                     <div>Cơ xương khớp</div>
                                                 </div>
                                             </div>
                                         )
                                     })
-                                } */}
+                                }
                             </Slider>
                         </div>
                     </div>
@@ -83,6 +82,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        // getRoleStart: () => dispatch(actions.fetchRoleStart()),
         loadTopDoctors: () => dispatch(actions.fetchTopDoctors()),
     };
 };
