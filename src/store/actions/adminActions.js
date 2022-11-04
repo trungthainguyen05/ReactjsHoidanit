@@ -2,7 +2,7 @@ import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService,
     getAllUsers, deleteUserService, editUserService,
-    getTopDoctorHomeService, getAllDoctors, saveDetailMarkdownDoctor
+    getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService
 } from '../../services/userService';
 import { toast } from "react-toastify";
 
@@ -233,7 +233,7 @@ export const fetchAllDoctors = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllDoctors();
-            // console.log('trung check fetchAllDoctors from adminAction: ', res)
+            console.log('trung check fetchAllDoctors from adminAction: ', res)
             if (res && res.errCode === 0) {
                 dispatch(fetchAllDoctorsSuccess(res.data))
             } else {
@@ -258,7 +258,7 @@ export const fetchAllDoctorsFailed = () => ({
 export const saveDetailDoctor = (data) => {
     return async (dispatch, getState) => {
         try {
-            let res = await saveDetailMarkdownDoctor(data);
+            let res = await saveDetailDoctorService(data);
             // console.log('trung check fetchAllDoctors from adminAction: ', res)
             if (res && res.errCode === 0) {
                 toast.success("Update the detail succeed!");

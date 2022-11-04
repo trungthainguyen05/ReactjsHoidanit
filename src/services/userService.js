@@ -37,7 +37,7 @@ const getAllDoctors = () => {
     return axios.get(`/api/top-doctor-home`)
 }
 
-const saveDetailMarkdownDoctor = (data) => {
+const saveDetailDoctorService = (data) => {
     return axios.post('/api/save-infor-doctors', data);
 }
 
@@ -50,5 +50,5 @@ export {
     getAllCodeService,
     getTopDoctorHomeService,
     getAllDoctors,
-    saveDetailMarkdownDoctor,
+    saveDetailDoctorService,
 }
