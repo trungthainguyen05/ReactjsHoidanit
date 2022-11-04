@@ -233,7 +233,7 @@ export const fetchAllDoctors = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllDoctors();
-            console.log('trung check fetchAllDoctors from adminAction: ', res)
+            // console.log('trung check fetchAllDoctors from adminAction: ', res)
             if (res && res.errCode === 0) {
                 dispatch(fetchAllDoctorsSuccess(res.data))
             } else {
