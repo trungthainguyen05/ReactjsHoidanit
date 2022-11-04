@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import * as actions from '../../../store/actions'
 import { LANGUAGES } from '../../../utils';
 import { FormattedMessage } from 'react-intl';
+import { withRouter } from 'react-router';
 
 class OutstandingDoctor extends Component {
 
@@ -27,9 +28,13 @@ class OutstandingDoctor extends Component {
         }
     }
 
+    handleViewDetailDoctor = (doctor) => {
+        console.log('Tr check handleViewDetailDoctor: ', doctor);
+        this.props.history.push(`/detail-doctor/${doctor.id}`);
+    }
+
     render() {
         let arrDoctors = this.props.topDoctorsRedux;
-        console.log('trungcheck arrDoctors: ', arrDoctors);
         let { language } = this.props;
         return (
             <div>
@@ -37,10 +42,10 @@ class OutstandingDoctor extends Component {
                     <div className="section-container">
                         <div className="section-header">
                             <span className="title-section">
-                                <FormattedMessage id="homepage.out-standing-doctor"/>
+                                <FormattedMessage id="homepage.out-standing-doctor" />
                             </span>
                             <button className="btn-section">
-                                <FormattedMessage id="homepage.more-infor"/>
+                                <FormattedMessage id="homepage.more-infor" />
                             </button>
                         </div>
                         <div className="section-body">
@@ -54,7 +59,11 @@ class OutstandingDoctor extends Component {
                                         let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`
                                         let nameEn = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`
                                         return (
-                                            <div className="section-customize" key={index}>
+                                            <div
+                                                className="section-customize"
+                                                key={index}
+                                                onClick={() => this.handleViewDetailDoctor(item)}
+                                            >
                                                 <div className="bg-image section-outstanding-doctor"
                                                     style={{ backgroundImage: `url(${imageBase64})` }}
                                                 />
@@ -92,4 +101,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutstandingDoctor));
