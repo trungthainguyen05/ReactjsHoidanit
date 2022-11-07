@@ -2,6 +2,22 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 
 class DetailDoctor extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }
+    }
+
+    async componentDidMount() {
+
+    }
+
+    componentDidUpdate(prevProps, PrevState, SnapShot) {
+
+    }
+
     render() {
         return (
             <div>
