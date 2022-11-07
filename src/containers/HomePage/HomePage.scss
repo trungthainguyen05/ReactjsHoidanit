@@ -33,6 +33,9 @@
     }
 }
 
+.slick-disabled {
+    display: none !important;
+}
 
 .section-share {
     height: 330px;
@@ -102,6 +105,14 @@
         .section-body {
 
             .section-customize {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center;
+                border: 1px solid lightgreen;
+                gap: 5px;
+                width: 340px !important;
+                cursor: pointer;
 
                 // padding: 0 10px;
                 .bg-image {
@@ -122,7 +133,7 @@
                     }
 
                     &.section-outstanding-doctor {
-                        background-image: url('../../assets/OutstandingDoctor/anh-dai-dien-bs.jpg');
+                        // background-image: url('../../assets/OutstandingDoctor/anh-dai-dien-bs.jpg');
                         width: 120px;
                         height: 120px;
                         border-radius: 50%

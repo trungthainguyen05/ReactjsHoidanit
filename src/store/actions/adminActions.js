@@ -1,7 +1,8 @@
 import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService,
-    getAllUsers, deleteUserService, editUserService
+    getAllUsers, deleteUserService, editUserService,
+    getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService
 } from '../../services/userService';
 import { toast } from "react-toastify";
 
@@ -120,6 +121,7 @@ export const fetchAllUsersStart = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllUsers("ALL");
+            // console.log('trung check getAllUsers from AdminAction: ', res)
             if (res && res.errCode === 0) {
 
                 dispatch(fetchAllUsersSuccess(res.users.reverse()));
@@ -198,3 +200,85 @@ export const editUserFailed = () => ({
     type: actionTypes.EDIT_USER_FAILED
 })
 
+export const fetchTopDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopDoctorHomeService('5');
+            if (res && res.errCode === 0) {
+                // console.log('trung check getTopDoctorHomeService from adminAction: ', res)
+                dispatch(fetchTopDoctorsSuccess(res.data))
+            } else {
+                dispatch(fetchTopDoctorsFailed())
+            }
+
+        } catch (e) {
+            console.log(' ', e);
+            dispatch(fetchTopDoctorsFailed());
+
+        }
+
+    }
+}
+
+export const fetchTopDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+    dataDoctor: data
+})
+
+export const fetchTopDoctorsFailed = () => ({
+    type: actionTypes.FETCH_TOP_DOCTORS_FAILED
+})
+
+export const fetchAllDoctors = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors();
+            // console.log('trung check fetchAllDoctors from adminAction: ', res)
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorsSuccess(res.data))
+            } else {
+                dispatch(fetchAllDoctorsFailed())
+            }
+        } catch (e) {
+            console.log(' ', e);
+            dispatch(fetchAllDoctorsFailed());
+        }
+    }
+}
+
+export const fetchAllDoctorsSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
+    dataDr: data
+})
+
+export const fetchAllDoctorsFailed = () => ({
+    type: actionTypes.FETCH_ALL_DOCTORS_FAILED
+})
+
+export const saveDetailDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveDetailDoctorService(data);
+            // console.log('trung check fetchAllDoctors from adminAction: ', res)
+            if (res && res.errCode === 0) {
+                toast.success("Update the detail succeed!");
+                dispatch(saveDetailDoctorSuccess())
+            } else {
+                toast.error("Update detail doctor error");
+                dispatch(saveDetailDoctorFailed())
+            }
+        } catch (e) {
+            console.log(' ', e);
+            toast.error("Update detail doctor error");
+            dispatch(saveDetailDoctorFailed());
+        }
+    }
+}
+
+export const saveDetailDoctorSuccess = () => ({
+    type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS
+})
+
+export const saveDetailDoctorFailed = () => ({
+    type: actionTypes.SAVE_DETAIL_DOCTOR_FAILED
+})
