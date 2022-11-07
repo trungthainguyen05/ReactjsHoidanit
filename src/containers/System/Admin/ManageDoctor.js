@@ -8,13 +8,9 @@ import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
-import { LANGUAGES } from '../../../utils';
+import { CRUD_ACTIONS, LANGUAGES } from '../../../utils';
+import { getDetailInforDoctor } from '../../../services/userService';
 
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-];
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
@@ -27,6 +23,7 @@ class ManageDoctor extends Component {
             selectedOption: '',
             description: '',
             listDoctors: [],
+            hasOldData: false,
 
         }
     }
@@ -52,18 +49,35 @@ class ManageDoctor extends Component {
     }
 
     handleEditorChange = ({ html, text }) => {
-        // console.log('trung check handleEditorChange', html, text);
         this.setState({
             contentMarkdown: text,
             contentHTML: html,
         });
     }
 
-    handleChange = (option) => {
-        // console.log('option selected: ', selectedOption);
+    handleChangeSelect = async (option) => {
         this.setState({
             selectedOption: option
         })
+
+        let res = await getDetailInforDoctor(option.value);
+        if (res && res.errCode === 0 && res.data && res.data.Markdown) {
+            let markdown = res.data.Markdown;
+            this.setState({
+                contentHTML: markdown.contentHTML,
+                contentMarkdown: markdown.contentMarkdown,
+                description: markdown.description,
+                hasOldData: true,
+            })
+        } else {
+            this.setState({
+                contentHTML: '',
+                contentMarkdown: '',
+                description: '',
+                hasOldData: false,
+            })
+        }
+        console.log('tr check res: ', res);
     }
 
     handleOnChangeDesc = (event) => {
@@ -90,17 +104,18 @@ class ManageDoctor extends Component {
     }
 
     handleSaveContentMarkdown = () => {
-        console.log('trung check state from manageDoctor.js: ', this.state);
+        let { hasOldData } = this.state;
         this.props.saveDetailDoctor({
             contentHTML: this.state.contentHTML,
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
             doctorId: this.state.selectedOption.value,
+            action: hasOldData === true ? CRUD_ACTIONS.EDIT : CRUD_ACTIONS.CREATE,
         })
     }
 
     render() {
-        console.log('Tr check state from ManageDoctor: ', this.state)
+        let { hasOldData } = this.state;
         return (
             <div className="manage-doctor-container">
                 <div className="manage-doctor-title">
@@ -111,7 +126,7 @@ class ManageDoctor extends Component {
                         <label>Chọn Bác sĩ</label>
                         <Select
                             value={this.state.selectedOption}
-                            onChange={this.handleChange}
+                            onChange={this.handleChangeSelect}
                             options={this.state.listDoctors}
                         />
                     </div>
@@ -133,13 +148,16 @@ class ManageDoctor extends Component {
                         style={{ height: '500px' }}
                         renderHTML={text => mdParser.render(text)}
                         onChange={this.handleEditorChange}
+                        value={this.state.contentMarkdown}
                     />
                 </div>
                 <button
                     onClick={() => this.handleSaveContentMarkdown()}
-                    className="save-content-doctor"
+                    className={hasOldData === true ? "save-content-doctor" : "create-content-doctor"}
                 >
-                    Lưu thông tin
+                    <span>
+                        {hasOldData === true ? "Lưu thông tin" : "Tạo thông tin"}
+                    </span>
                 </button>
             </div>
         );
