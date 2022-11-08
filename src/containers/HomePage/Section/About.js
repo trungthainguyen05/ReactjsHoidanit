@@ -16,9 +16,9 @@ class About extends Component {
                                 height="300px"
                                 src="https://www.youtube.com/embed/147SkAVXEqM?list=PLncHg6Kn2JT5-kzm53oVL5ZBAe-LTREGA"
                                 title="#51 Kết Thúc Design Giao Diện Clone BookingCare.vn 4 | React.JS Cho Người Mới Bắt Đầu"
-                                frameborder="0"
+                                frameBorder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
+                                allowFullScreen>
 
                             </iframe>
                         </div>
