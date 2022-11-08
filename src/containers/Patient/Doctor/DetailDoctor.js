@@ -34,13 +34,11 @@ class DetailDoctor extends Component {
     render() {
         let { detailDoctor } = this.state;
         let language = this.props.language;
-        let nameVi = '', nameEd = ';'
+        let nameVi = '', nameEn = ''
         if (detailDoctor && detailDoctor.positionData) {
-            // nameEn = `${detailDoctor.positionData.valueVi}, ${detailDoctor.firstName} ${detailDoctor.lastName}`
-            console.log('tr check nameVI, ', detailDoctor.positionData.nameVi)
+            nameVi = `${detailDoctor.positionData.valueVi}, ${detailDoctor.lastName} ${detailDoctor.firstName}`
+            nameEn = `${detailDoctor.positionData.valueEn}, ${detailDoctor.firstName} ${detailDoctor.lastName}`
         }
-
-
 
         console.log('tr check detailDoctor: ', detailDoctor);
         return (
@@ -57,7 +55,7 @@ class DetailDoctor extends Component {
                         </div>
                         <div className="content-right">
                             <div className="up">
-                                Pho giao su, Nguyen Van A
+                                {language === LANGUAGES.VI ? nameVi : nameEn}
                             </div>
                             <div className="down">
                                 {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.description
@@ -72,7 +70,12 @@ class DetailDoctor extends Component {
 
                     </div>
                     <div className="detail-infor-doctor">
+                        {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML
+                            &&
+                            <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}>
 
+                            </div>
+                        }
                     </div>
                     <div className="comment-doctor">
 
