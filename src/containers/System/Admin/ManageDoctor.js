@@ -119,30 +119,60 @@ class ManageDoctor extends Component {
         return (
             <div className="manage-doctor-container">
                 <div className="manage-doctor-title">
-                    hello from manage doctor
+                    <FormattedMessage id="admin.manage-doctor.title" />
                 </div>
                 <div className="more-infor">
                     <div className="content-left">
-                        <label>Chọn Bác sĩ</label>
+                        <label><FormattedMessage id="admin.manage-doctor.select-doctor" /></label>
                         <Select
                             value={this.state.selectedOption}
                             onChange={this.handleChangeSelect}
                             options={this.state.listDoctors}
+                            placeholder={'Chọn bác sĩ'}
                         />
                     </div>
                     <div className="content-right">
-                        <label>Thông tin giới thiệu</label>
+                        <label><FormattedMessage id="admin.manage-doctor.intro" /></label>
                         <textarea
                             className="form-control"
-                            rows="4"
                             onChange={(event) => this.handleOnChangeDesc(event)}
                             value={this.state.description}
                             placeholder="Please input the introduction of Doctor."
                         >
-
                         </textarea>
                     </div>
                 </div>
+
+                <div className="more-infor-extra row">
+                    <div className="col-4 form-group">
+                        <label>Chọn giá</label>
+                        <input className="form-control" />
+                    </div>
+                    <div className="col-4 form-group">
+                        <label>Chọn phương thức thanh toán</label>
+                        <input className="form-control" />
+                    </div>
+                    <div className="col-4 form-group">
+                        <label>Chọn tỉnh thành</label>
+                        <input className="form-control" />
+                    </div>
+
+                    <div className="col-4 form-group">
+                        <label>Tên phòng khám</label>
+                        <input className="form-control" />
+                    </div>
+                    <div className="col-4 form-group">
+                        <label>Địa chỉ phòng khám</label>
+                        <input className="form-control" />
+                    </div>
+                    <div className="col-4 form-group">
+                        <label>Note</label>
+                        <input className="form-control" />
+                    </div>
+
+                </div>
+
+
                 <div className="manage-doctor-editor">
                     <MdEditor
                         style={{ height: '500px' }}
@@ -156,7 +186,11 @@ class ManageDoctor extends Component {
                     className={hasOldData === true ? "save-content-doctor" : "create-content-doctor"}
                 >
                     <span>
-                        {hasOldData === true ? "Lưu thông tin" : "Tạo thông tin"}
+                        {hasOldData === true ?
+                            <FormattedMessage id="admin.manage-doctor.add" />
+                            :
+                            <FormattedMessage id="admin.manage-doctor.save" />
+                        }
                     </span>
                 </button>
             </div>
