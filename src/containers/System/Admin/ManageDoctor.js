@@ -142,11 +142,15 @@ class ManageDoctor extends Component {
         })
     }
 
+    handleChangeSelectDoctorInfor = (selectedOption, name) => {
+        console.log('tr check handleChangeSelectDoctorInfor: ', selectedOption, name)
+    }
+
     render() {
         let { hasOldData } = this.state;
-        // listPrice: [],
-        //     listPayment: [],
-        //         listProvince: [],
+        // selectedPrice: '',
+        //     selectedPayment: '',
+        //         selectedProvince: '',
         return (
             <div className="manage-doctor-container">
                 <div className="manage-doctor-title">
@@ -176,43 +180,46 @@ class ManageDoctor extends Component {
 
                 <div className="more-infor-extra row">
                     <div className="col-4 form-group">
-                        <label>Chọn giá</label>
+                        <label><FormattedMessage id="admin.manage-doctor.price" /></label>
                         <Select
-                            // value={this.state.selectedOption}
-                            // onChange={this.handleChangeSelect}
+                            value={this.state.selectedPrice}
+                            onChange={this.handleChangeSelectDoctorInfor}
                             options={this.state.listPrice}
                             placeholder={'Chọn bác sĩ'}
+                            name={'selectedPrice'}
                         />
                     </div>
                     <div className="col-4 form-group">
-                        <label>Chọn phương thức thanh toán</label>
+                        <label><FormattedMessage id="admin.manage-doctor.payment" /></label>
                         <Select
-                            // value={this.state.selectedOption}
-                            // onChange={this.handleChangeSelect}
+                            value={this.state.selectedPayment}
+                            onChange={this.handleChangeSelectDoctorInfor}
                             options={this.state.listPayment}
                             placeholder={'Chọn phương thức thanh toán'}
+                            name={'selectedPayment'}
                         />
                     </div>
                     <div className="col-4 form-group">
-                        <label>Chọn tỉnh thành</label>
+                        <label><FormattedMessage id="admin.manage-doctor.province" /></label>
                         <Select
-                            // value={this.state.selectedOption}
-                            // onChange={this.handleChangeSelect}
+                            value={this.state.selectedProvince}
+                            onChange={this.handleChangeSelectDoctorInfor}
                             options={this.state.listProvince}
                             placeholder={'Chọn tỉnh thành'}
+                            name={'selectedProvince'}
                         />
                     </div>
 
                     <div className="col-4 form-group">
-                        <label>Tên phòng khám</label>
+                        <label><FormattedMessage id="admin.manage-doctor.nameClinic" /></label>
                         <input className="form-control" />
                     </div>
                     <div className="col-4 form-group">
-                        <label>Địa chỉ phòng khám</label>
+                        <label><FormattedMessage id="admin.manage-doctor.addressClinic" /></label>
                         <input className="form-control" />
                     </div>
                     <div className="col-4 form-group">
-                        <label>Note</label>
+                        <label><FormattedMessage id="admin.manage-doctor.note" /></label>
                         <input className="form-control" />
                     </div>
 
