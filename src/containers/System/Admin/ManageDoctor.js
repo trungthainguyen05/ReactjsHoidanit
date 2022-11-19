@@ -112,7 +112,6 @@ class ManageDoctor extends Component {
                 hasOldData: false,
             })
         }
-        console.log('tr check res: ', res);
     }
 
     handleOnChangeText = (event, id) => {
@@ -193,10 +192,6 @@ class ManageDoctor extends Component {
     render() {
         let { hasOldData } = this.state;
         console.log('tr check state: ', this.state);
-
-        // nameClinic: '',
-        // addressClinic: '',
-        // note: '',
 
         return (
             <div className="manage-doctor-container">
