@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+// import './DetailDoctor.scss'
 
 class DetailDoctor extends Component {
 
@@ -15,7 +16,9 @@ class DetailDoctor extends Component {
     }
 
     componentDidUpdate(prevProps, PrevState, SnapShot) {
+        if (prevProps.language !== this.props.language) {
 
+        }
     }
 
     render() {
@@ -29,7 +32,7 @@ class DetailDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        language: state.app.language,
     };
 };
 
