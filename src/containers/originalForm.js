@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { FormattedMessage } from 'react-intl';
 // import './DetailDoctor.scss'
 
 class DetailDoctor extends Component {

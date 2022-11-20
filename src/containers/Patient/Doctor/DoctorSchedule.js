@@ -97,7 +97,7 @@ class DoctorSchedule extends Component {
         let { language } = this.props;
 
         //de xem log
-        console.log('tr check allAvailableTime state: ', allAvailableTime);
+        // console.log('tr check allAvailableTime state: ', allAvailableTime);
 
         return (
             <div className="doctor-schedule-container">
