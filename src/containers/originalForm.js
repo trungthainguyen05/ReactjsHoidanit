@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { FormattedMessage } from 'react-intl';
-// import './DetailDoctor.scss'
+// import './originalForm.scss'
 
-class DetailDoctor extends Component {
+class originalForm extends Component {
 
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ class DetailDoctor extends Component {
     render() {
         return (
             <div>
-                hello
+                hello from originalForm
             </div>
         );
     }
@@ -42,4 +42,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailDoctor);
+export default connect(mapStateToProps, mapDispatchToProps)(originalForm);
