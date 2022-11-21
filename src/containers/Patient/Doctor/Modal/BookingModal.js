@@ -5,18 +5,27 @@ import './BookingModal.scss';
 import { Modal } from 'reactstrap';
 import ProfileDoctor from '../ProfileDoctor';
 import _ from 'lodash';
+import DatePicker from '../../../../components/Input/DatePicker';
+import * as actions from '../../../../store/actions';
 
 class BookingModal extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-
+            fullName: '',
+            phoneNumber: '',
+            email: '',
+            address: '',
+            reason: '',
+            birthday: '',
+            gender: '',
+            doctorId: '',
         }
     }
 
     async componentDidMount() {
-
+        this.props.getGenders();
     }
 
     componentDidUpdate(prevProps, PrevState, SnapShot) {
@@ -24,11 +33,27 @@ class BookingModal extends Component {
 
         }
     }
-    // toggle={ }
+
+    handleOnChangeInput = (event, id) => {
+        let valueInput = event.target.value;
+        let stateCopy = { ...this.state };
+        stateCopy[id] = valueInput;
+        this.setState({
+            ...stateCopy
+        })
+    }
+
+    handleOnChangeDatePicker = (date) => {
+        this.setState({
+            birthday: date[0],
+        })
+    }
+
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
 
+        console.log('tr check state from booking Modal: ', this.state);
         return (
             <Modal
                 isOpen={isOpenModal}
@@ -50,38 +75,62 @@ class BookingModal extends Component {
                         <div className="doctor-infor">
                             <ProfileDoctor
                                 doctorId={doctorId}
+                                isShowDescriptionDoctor={false}
+                                dataTime={dataTime}
                             />
                         </div>
 
                         <div className="container">
                             <div className="row">
-                                <div className="col-6">
+                                <div className="col-6 form-group">
                                     <label>Họ tên</label>
-                                    <input className="form-control" />
+                                    <input className="form-control"
+                                        value={this.state.fullName}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'fullName')}
+                                    />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 form-group">
                                     <label>Số điện thoại</label>
-                                    <input className="form-control" />
+                                    <input className="form-control"
+                                        value={this.state.phoneNumber}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'phoneNumber')}
+                                    />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 form-group">
                                     <label>Địa chỉ Email</label>
-                                    <input className="form-control" />
+                                    <input className="form-control"
+                                        value={this.state.email}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'email')}
+                                    />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 form-group">
                                     <label>Địa chỉ liên hệ</label>
-                                    <input className="form-control" />
+                                    <input className="form-control"
+                                        value={this.state.address}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'address')}
+                                    />
                                 </div>
-                                <div className="col-12">
+                                <div className="col-12 form-group">
                                     <label>Lý do khám</label>
-                                    <input className="form-control" />
+                                    <input className="form-control"
+                                        value={this.state.reason}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'reason')}
+                                    />
                                 </div>
-                                <div className="col-6">
-                                    <label>Đặt cho ai</label>
-                                    <input className="form-control" />
+                                <div className="col-6 form-group">
+                                    <label>Ngày sinh</label>
+                                    <DatePicker
+                                        // onChange={this.handleOnChangeDatePicker}
+                                        className="form-control"
+                                        value={this.state.birthday}
+                                    />
                                 </div>
-                                <div className="col-6">
+                                <div className="col-6 form-group">
                                     <label>Giới tính</label>
-                                    <input className="form-control" />
+                                    <input className="form-control"
+                                        value={this.state.gender}
+                                        onChange={(event) => this.handleOnChangeInput(event, 'gender')}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -110,11 +159,13 @@ class BookingModal extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        genders: state.admin.genders,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
+        getGenders: () => dispatch(actions.fetchGenderStart()),
     };
 };
 
