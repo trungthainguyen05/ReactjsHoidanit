@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { FormattedMessage } from 'react-intl';
+// import './originalForm.scss'
 
-class DetailDoctor extends Component {
+class originalForm extends Component {
 
     constructor(props) {
         super(props);
@@ -15,13 +17,15 @@ class DetailDoctor extends Component {
     }
 
     componentDidUpdate(prevProps, PrevState, SnapShot) {
+        if (prevProps.language !== this.props.language) {
 
+        }
     }
 
     render() {
         return (
             <div>
-                hello
+                hello from originalForm
             </div>
         );
     }
@@ -29,7 +33,7 @@ class DetailDoctor extends Component {
 
 const mapStateToProps = state => {
     return {
-
+        language: state.app.language,
     };
 };
 
@@ -38,4 +42,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DetailDoctor);
+export default connect(mapStateToProps, mapDispatchToProps)(originalForm);
