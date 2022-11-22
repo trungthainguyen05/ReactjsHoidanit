@@ -11,6 +11,8 @@ import { LANGUAGES } from '../../../../utils';
 import Select from 'react-select';
 import { postPatientBookAppointment } from '../../../../services/userService';
 import { toast } from "react-toastify";
+import moment from 'moment';
+import localization from 'moment/locale/vi';
 
 class BookingModal extends Component {
 
@@ -97,8 +99,9 @@ class BookingModal extends Component {
     handleConfirmBooking = async () => {
         // console.log('tr check state from booking Modal: ', this.state);
         //validate input
-        // !data.email || !data.doctorId || !data.timeType || !data.date
         let date = new Date(this.state.birthday).getTime();
+        let timeString = this.buildTimeBooking(this.props.dataTime);
+
         let res = await postPatientBookAppointment({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
@@ -109,6 +112,8 @@ class BookingModal extends Component {
             doctorId: this.state.doctorId,
             seletedGender: this.state.seletedGender.value,
             timeType: this.state.timeType,
+            language: this.props.language,
+            timeString: timeString,
         })
 
         if (res && res.errCode === 0) {
@@ -119,6 +124,22 @@ class BookingModal extends Component {
         }
 
 
+    }
+
+    buildTimeBooking = (dataTime) => {
+        let { language } = this.props;
+
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let time = language === LANGUAGES.VI ? dataTime.timeTypeData.valueVi : dataTime.timeTypeData.valueEn;
+            let date = language === LANGUAGES.VI ?
+                moment.unix(+dataTime.date / 1000).format('dddd - DD/MM/YYYY')
+                :
+                moment.unix(+dataTime.date / 1000).locale('en').format('ddd - MM/DD/YYYY');
+
+            return `${time} - ${date}`
+
+        }
+        return ''
     }
 
     render() {
