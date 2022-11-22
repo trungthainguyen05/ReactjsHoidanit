@@ -7,6 +7,10 @@ import ProfileDoctor from '../ProfileDoctor';
 import _ from 'lodash';
 import DatePicker from '../../../../components/Input/DatePicker';
 import * as actions from '../../../../store/actions';
+import { LANGUAGES } from '../../../../utils';
+import Select from 'react-select';
+import { postPatientBookAppointment } from '../../../../services/userService';
+import { toast } from "react-toastify";
 
 class BookingModal extends Component {
 
@@ -19,8 +23,10 @@ class BookingModal extends Component {
             address: '',
             reason: '',
             birthday: '',
-            gender: '',
             doctorId: '',
+            seletedGender: '',
+            genders: '',
+            timeType: '',
         }
     }
 
@@ -28,8 +34,41 @@ class BookingModal extends Component {
         this.props.getGenders();
     }
 
+    buildDataGender = (data) => {
+        let result = [];
+        let language = this.props.language;
+
+        if (data && data.length > 0) {
+            data.map(item => {
+                let object = {};
+                object.label = language === LANGUAGES.VI ? item.valueVi : item.valueEn;
+                object.value = item.keyMap;
+                result.push(object);
+            })
+        }
+        return result;
+    }
+
     componentDidUpdate(prevProps, PrevState, SnapShot) {
         if (prevProps.language !== this.props.language) {
+            this.setState({
+                genders: this.buildDataGender(this.props.genders),
+            })
+        }
+        if (prevProps.genders !== this.props.genders) {
+            this.setState({
+                genders: this.buildDataGender(this.props.genders),
+            })
+        }
+        if (prevProps.dataTime !== this.props.dataTime) {
+            let dataTime = this.props.dataTime;
+            let timeType = this.props.dataTime.timeType;
+            if (dataTime && !_.isEmpty(dataTime)) {
+                this.setState({
+                    doctorId: dataTime.doctorId,
+                    timeType: timeType,
+                })
+            }
 
         }
     }
@@ -49,11 +88,44 @@ class BookingModal extends Component {
         })
     }
 
+    handleChangeSelect = (selectedOption) => {
+        this.setState({
+            seletedGender: selectedOption,
+        })
+    }
+
+    handleConfirmBooking = async () => {
+        // console.log('tr check state from booking Modal: ', this.state);
+        //validate input
+        // !data.email || !data.doctorId || !data.timeType || !data.date
+        let date = new Date(this.state.birthday).getTime();
+        let res = await postPatientBookAppointment({
+            fullName: this.state.fullName,
+            phoneNumber: this.state.phoneNumber,
+            email: this.state.email,
+            address: this.state.address,
+            reason: this.state.reason,
+            date: date,
+            doctorId: this.state.doctorId,
+            seletedGender: this.state.seletedGender.value,
+            timeType: this.state.timeType,
+        })
+
+        if (res && res.errCode === 0) {
+            toast.success("Create a new booking succeed!");
+            this.props.closeBookingModal();
+        } else {
+            toast.error("Create a booking failed");
+        }
+
+
+    }
+
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
 
-        console.log('tr check state from booking Modal: ', this.state);
+
         return (
             <Modal
                 isOpen={isOpenModal}
@@ -63,7 +135,9 @@ class BookingModal extends Component {
             >
                 <div className="booking-modal-content">
                     <div className="booking-modal-header">
-                        <span className="left">Thông tin đặt lịch khám bệnh</span>
+                        <span className="left">
+                            <FormattedMessage id="patient.booking-modal.title" />
+                        </span>
                         <span
                             className="right"
                             onClick={closeBookingModal}
@@ -83,53 +157,68 @@ class BookingModal extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-6 form-group">
-                                    <label>Họ tên</label>
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.fullname" />
+                                    </label>
                                     <input className="form-control"
                                         value={this.state.fullName}
                                         onChange={(event) => this.handleOnChangeInput(event, 'fullName')}
                                     />
                                 </div>
                                 <div className="col-6 form-group">
-                                    <label>Số điện thoại</label>
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.phonenumber" />
+                                    </label>
                                     <input className="form-control"
                                         value={this.state.phoneNumber}
                                         onChange={(event) => this.handleOnChangeInput(event, 'phoneNumber')}
                                     />
                                 </div>
                                 <div className="col-6 form-group">
-                                    <label>Địa chỉ Email</label>
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.email" />
+                                    </label>
                                     <input className="form-control"
                                         value={this.state.email}
                                         onChange={(event) => this.handleOnChangeInput(event, 'email')}
                                     />
                                 </div>
                                 <div className="col-6 form-group">
-                                    <label>Địa chỉ liên hệ</label>
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.address" />
+                                    </label>
                                     <input className="form-control"
                                         value={this.state.address}
                                         onChange={(event) => this.handleOnChangeInput(event, 'address')}
                                     />
                                 </div>
                                 <div className="col-12 form-group">
-                                    <label>Lý do khám</label>
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.reason" />
+                                    </label>
                                     <input className="form-control"
                                         value={this.state.reason}
                                         onChange={(event) => this.handleOnChangeInput(event, 'reason')}
                                     />
                                 </div>
                                 <div className="col-6 form-group">
-                                    <label>Ngày sinh</label>
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.birthday" />
+                                    </label>
                                     <DatePicker
-                                        // onChange={this.handleOnChangeDatePicker}
+                                        onChange={this.handleOnChangeDatePicker}
                                         className="form-control"
                                         value={this.state.birthday}
                                     />
                                 </div>
                                 <div className="col-6 form-group">
-                                    <label>Giới tính</label>
-                                    <input className="form-control"
-                                        value={this.state.gender}
-                                        onChange={(event) => this.handleOnChangeInput(event, 'gender')}
+                                    <label>
+                                        <FormattedMessage id="patient.booking-modal.gender" />
+                                    </label>
+                                    <Select
+                                        value={this.state.seletedGender}
+                                        onChange={this.handleChangeSelect}
+                                        options={this.state.genders}
                                     />
                                 </div>
                             </div>
@@ -139,15 +228,15 @@ class BookingModal extends Component {
                     <div className="booking-modal-footer">
                         <button
                             className="btn-booking-confirm"
-                            onClick={closeBookingModal}
+                            onClick={() => this.handleConfirmBooking()}
                         >
-                            Xác nhận
+                            <FormattedMessage id="patient.booking-modal.confirm" />
                         </button>
                         <button
                             className="btn-booking-cancel"
                             onClick={closeBookingModal}
                         >
-                            Hủy
+                            <FormattedMessage id="patient.booking-modal.cancel" />
                         </button>
                     </div>
                 </div>
