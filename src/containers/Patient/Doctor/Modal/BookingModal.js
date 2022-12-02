@@ -101,6 +101,7 @@ class BookingModal extends Component {
         //validate input
         let date = new Date(this.state.birthday).getTime();
         let timeString = this.buildTimeBooking(this.props.dataTime);
+        let doctorName = this.buildDoctorName(this.props.dataTime);
 
         let res = await postPatientBookAppointment({
             fullName: this.state.fullName,
@@ -114,6 +115,7 @@ class BookingModal extends Component {
             timeType: this.state.timeType,
             language: this.props.language,
             timeString: timeString,
+            doctorName: doctorName,
         })
 
         if (res && res.errCode === 0) {
@@ -142,9 +144,24 @@ class BookingModal extends Component {
         return ''
     }
 
+    buildDoctorName = (dataTime) => {
+        let { language } = this.props;
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let name = language === LANGUAGES.VI ?
+                `${dataTime.doctorData.lastName} ${dataTime.doctorData.firstName}`
+                :
+                `${dataTime.doctorData.firstName} ${dataTime.doctorData.lastName}`
+
+            return name;
+        }
+        return ''
+    }
+
     render() {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
+
+        console.log('tr check datatime from BookingModal: ', dataTime);
 
 
         return (

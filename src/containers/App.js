@@ -15,6 +15,7 @@ import HomePage from './HomePage/HomePage.js'
 import CustomScrollbars from '../components/CustomScrollbars';
 import DetailDoctor from './Patient/Doctor/DetailDoctor';
 import Doctor from '../routes/Doctor';
+import VerifyEmail from './Patient/VerifyEmail';
 
 class App extends Component {
 
@@ -52,7 +53,7 @@ class App extends Component {
 
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
-
+                                    <Route path={path.VERYFY_EMAIL_BOOKING} component={VerifyEmail} />
 
                                 </Switch>
                             </CustomScrollbars>
