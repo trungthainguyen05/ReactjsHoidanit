@@ -104,7 +104,7 @@ class ManageSchedule extends Component {
 
     handleSaveSchedule = async () => {
         let { rangeTime, selectedDoctor, currentDate } = this.state;
-        console.log('tr check state: ', this.state);
+        // console.log('tr check state: ', this.state);
         let result = [];
 
         if (!currentDate) {
@@ -140,8 +140,9 @@ class ManageSchedule extends Component {
             doctorId: selectedDoctor.value,
             formatedDate: formatedDate
         });
-        console.log('tr check res:saveBulkScheduleDoctor ', res);
-        console.log('tr check result: ', result);
+        toast.success("Create schedule succeed!");
+        // console.log('tr check res:saveBulkScheduleDoctor ', res);
+        // console.log('tr check result: ', result);
     }
 
     render() {
