@@ -76,7 +76,6 @@ class ProfileDoctor extends Component {
             nameVi = `${dataProfile.positionData.valueVi}, ${dataProfile.lastName} ${dataProfile.firstName}`
             nameEn = `${dataProfile.positionData.valueEn}, ${dataProfile.firstName} ${dataProfile.lastName}`
         }
-        console.log('tr check props profileDoctor: ', dataTime)
 
         return (
             <div className="profile-doctor-container">

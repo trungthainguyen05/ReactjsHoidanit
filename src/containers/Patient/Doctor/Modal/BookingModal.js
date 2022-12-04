@@ -161,9 +161,6 @@ class BookingModal extends Component {
         let { isOpenModal, closeBookingModal, dataTime } = this.props;
         let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
 
-        console.log('tr check datatime from BookingModal: ', dataTime);
-
-
         return (
             <Modal
                 isOpen={isOpenModal}
