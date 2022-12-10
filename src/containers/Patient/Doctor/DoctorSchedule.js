@@ -24,8 +24,22 @@ class DoctorSchedule extends Component {
         let { language } = this.props;
         // console.log('moment Vi', moment(new Date()).format('dddd - DD/MM'));
         // console.log('moment En', moment(new Date()).locale('en').format("ddd - DD/MM"));
+        let allDays = this.setArrDays(language);
+        this.setState({
+            allAvailableTime: allDays
+        })
 
-        this.setArrDays(language);
+        // let doctorId = this.props.doctorIdFromParent;
+        // let date = allDays[0].value;
+        // if (doctorId) {
+        //     let res = await getScheduleDoctorByDate(doctorId, date);
+
+        //     if (res && res.errCode === 0) {
+        //         this.setState({
+        //             allAvailableTime: res.data ? res.data : []
+        //         })
+        //     }
+        // }
     }
 
     capitalizeFirstLetter(string) {
